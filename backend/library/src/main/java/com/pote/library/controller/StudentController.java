@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pote.library.dto.StudentRequestDTO;
@@ -35,7 +36,7 @@ public class StudentController {
 		return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
 	}
 
-	// 2. Get All Students	
+	// 2. Get All Students
 	@GetMapping
 	public ResponseEntity<List<Student>> getAllStudents() {
 		return ResponseEntity.ok(studentService.getAllStudents());
@@ -45,5 +46,13 @@ public class StudentController {
 	@GetMapping("/{cardId}")
 	public ResponseEntity<Student> getStudentByCardId(@PathVariable String cardId) {
 		return ResponseEntity.ok(studentService.getStudentByCardId(cardId));
+	}
+
+	// POST http://localhost:8080/api/students?creatorId=5
+	@PostMapping
+	public ResponseEntity<Student> registerStudent(@Valid @RequestBody StudentRequestDTO request,
+			@RequestParam Long creatorId) {
+		Student newStudent = studentService.registerStudent(request, creatorId);
+		return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
 	}
 }

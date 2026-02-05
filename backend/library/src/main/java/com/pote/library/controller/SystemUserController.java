@@ -32,4 +32,11 @@ public class SystemUserController {
 	public ResponseEntity<List<SystemUser>> getAllUsers() {
 		return ResponseEntity.ok(systemUserService.getAllUsers());
 	}
+
+	// POST http://localhost:8080/api/users/register?creatorId=1
+	@PostMapping("/register")
+	public ResponseEntity<SystemUser> registerUser(@RequestBody SystemUserRequestDTO request,
+			@RequestParam Long creatorId) { // Get ID from URL
+		return new ResponseEntity<>(systemUserService.registerUser(request, creatorId), HttpStatus.CREATED);
+	}
 }

@@ -14,4 +14,6 @@ public interface StudentService {
 
 	// Find by College ID Card (e.g. "CS-2024-001")
 	Student getStudentByCardId(String studentIdCard);
+	
+	Student registerStudent(StudentRequestDTO request, Long creatorId);
 }

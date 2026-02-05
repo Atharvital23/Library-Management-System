@@ -2,7 +2,6 @@ package com.pote.library.entity;
 
 import java.time.LocalDateTime;
 
-import com.pote.library.enums.BookStatus;
 import com.pote.library.enums.BorrowStatus;
 
 import jakarta.persistence.Column;

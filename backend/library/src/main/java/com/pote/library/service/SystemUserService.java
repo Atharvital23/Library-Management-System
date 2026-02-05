@@ -11,4 +11,6 @@ public interface SystemUserService {
 
 	// Get all system users
 	List<SystemUser> getAllUsers();
+	
+	SystemUser registerUser(SystemUserRequestDTO request, Long creatorId);
 }
