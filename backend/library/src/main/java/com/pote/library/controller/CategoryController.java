@@ -19,7 +19,7 @@ public class CategoryController {
 		this.categoryService = categoryService;
 	}
 
-	// 1. Add Category
+	// Add Category
 	// POST http://localhost:8080/api/categories
 	@PostMapping
 	public ResponseEntity<Category> addCategory(@RequestBody CategoryRequestDTO request) {
@@ -27,14 +27,14 @@ public class CategoryController {
 		return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
 	}
 
-	// 2. Get All Categories
+	// Get All Categories
 	// GET http://localhost:8080/api/categories
 	@GetMapping
 	public ResponseEntity<List<Category>> getAllCategories() {
 		return ResponseEntity.ok(categoryService.getAllCategories());
 	}
 
-	// 3. Delete Category
+	// Delete Category
 	// DELETE http://localhost:8080/api/categories/1
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteCategory(@PathVariable Integer id) {

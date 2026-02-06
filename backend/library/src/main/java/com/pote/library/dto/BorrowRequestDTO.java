@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 
 @Data
 public class BorrowRequestDTO {
-	private String qrCodeStr; // The scanned QR code
-	private String studentIdCard; // The student's ID card number
-	private LocalDateTime dueDate; // Optional: If admin wants to override default
-	private String issuedBy; // Username of the librarian
+	private String qrCodeStr; 
+	private String studentIdCard;
+	private LocalDateTime dueDate; 
+	private String issuedBy;
 
 	public String getQrCodeStr() {
 		return qrCodeStr;

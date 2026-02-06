@@ -14,8 +14,7 @@ public class BookCopy {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	// --- IMPORTANT: Relationship Mapping ---
-	// Replaces 'int book_id'. This links the copy to its parent Book details.
+	// This links the copy to its parent Book details.
 	@ManyToOne
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
@@ -40,7 +39,6 @@ public class BookCopy {
 	@Column(name = "condition_note")
 	private String conditionNote;
 
-	// Maps MySQL TINYINT(1)/BOOLEAN to Java boolean automatically
 	@Column(name = "is_reference")
 	private boolean isReference;
 

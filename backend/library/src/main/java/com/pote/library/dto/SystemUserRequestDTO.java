@@ -1,5 +1,7 @@
 package com.pote.library.dto;
 
+import com.pote.library.enums.SystemRole;
+
 import lombok.Data;
 
 @Data
@@ -7,7 +9,7 @@ public class SystemUserRequestDTO {
 	private String username;
 	private String password;
 	private String fullName;
-	private String role; // "ADMIN" or "LIBRARIAN"
+	private SystemRole role;
 
 	public String getUsername() {
 		return username;
@@ -33,11 +35,11 @@ public class SystemUserRequestDTO {
 		this.fullName = fullName;
 	}
 
-	public String getRole() {
+	public SystemRole getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(SystemRole role) {
 		this.role = role;
 	}
 

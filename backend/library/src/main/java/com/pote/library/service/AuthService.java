@@ -4,7 +4,13 @@ import com.pote.library.dto.LoginRequestDTO;
 import com.pote.library.entity.SystemUser;
 
 public interface AuthService {
-
-	// Abstract method for login
+	
+	/**
+	 * Login for LIBRARIAN, ADMIN values
+	 * @param request 
+	 * 
+	 * It will return SystemUser Object
+	 * @return
+	 */
 	SystemUser login(LoginRequestDTO request);
 }

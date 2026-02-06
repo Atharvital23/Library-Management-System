@@ -13,7 +13,7 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	// 1. Handle "Resource Not Found" (404)
+	// Handle "Resource Not Found" (404)
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
 		Map<String, Object> body = new HashMap<>();
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
 	}
 
-	// 2. Handle "Business Logic" Errors (400) - e.g., "Student Blocked"
+	// Handle "Business Logic" Errors (400) - e.g., "Student Blocked"
 	@ExceptionHandler(BusinessLogicException.class)
 	public ResponseEntity<Object> handleBusinessLogicException(BusinessLogicException ex, WebRequest request) {
 		Map<String, Object> body = new HashMap<>();
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
 	}
 
-	// 3. Handle All Other Unexpected Errors (500)
+	// Handle All Other Unexpected Errors (500)
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleGlobalException(Exception ex, WebRequest request) {
 		Map<String, Object> body = new HashMap<>();

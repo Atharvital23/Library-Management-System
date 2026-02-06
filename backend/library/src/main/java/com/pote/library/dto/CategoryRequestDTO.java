@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class CategoryRequestDTO {
-	private String name; // e.g., "Physics"
-	private String description; // e.g., "Books about laws of motion"
+	private String name;
+	private String description;
 
 	public String getName() {
 		return name;

@@ -27,7 +27,6 @@ public class BorrowTransactionServiceImpl implements BorrowTransactionService {
 	private final StudentRepository studentRepository;
 	private final BorrowTransactionRepository transactionRepository;
 
-	// --- MANUAL CONSTRUCTOR ---
 	public BorrowTransactionServiceImpl(BookCopyRepository bookCopyRepository, StudentRepository studentRepository,
 			BorrowTransactionRepository transactionRepository) {
 		this.bookCopyRepository = bookCopyRepository;
@@ -39,25 +38,25 @@ public class BorrowTransactionServiceImpl implements BorrowTransactionService {
 	@Transactional // Ensures both the Transaction and BookCopy update together (or fail together)
 	public BorrowTransaction issueBook(BorrowRequestDTO request) {
 
-		// 1. Find the Student
+		// Find the Student
 		Student student = studentRepository.findByStudentIdCard(request.getStudentIdCard()).orElseThrow(
 				() -> new ResourceNotFoundException("Student not found with ID: " + request.getStudentIdCard()));
 
-		// 2. Validate Student Status
+		// Validate Student Status
 		if (student.getStatus() != StudentStatus.ACTIVE) {
 			throw new BusinessLogicException("Student is " + student.getStatus() + ". Cannot issue books.");
 		}
 
-		// 3. Find the Book Copy
+		// Find the Book Copy
 		BookCopy bookCopy = bookCopyRepository.findByQrCodeStr(request.getQrCodeStr()).orElseThrow(
 				() -> new ResourceNotFoundException("Book Copy not found with QR: " + request.getQrCodeStr()));
 
-		// 4. Validate Book Availability
+		// Validate Book Availability
 		if (bookCopy.getStatus() != BookStatus.AVAILABLE) {
 			throw new BusinessLogicException("This book copy is currently " + bookCopy.getStatus());
 		}
 
-		// 5. Create the Transaction
+		// Create the Transaction
 		BorrowTransaction transaction = new BorrowTransaction();
 		transaction.setStudent(student);
 		transaction.setBookCopy(bookCopy);
@@ -75,11 +74,11 @@ public class BorrowTransactionServiceImpl implements BorrowTransactionService {
 		transaction.setFineAmount(0.0);
 		transaction.setFinePaid(true); // No fine initially
 
-		// 6. Update Book Copy Status (The DB Triggers will handle the counts)
+		// Update Book Copy Status (The DB Triggers will handle the counts)
 		bookCopy.setStatus(BookStatus.BORROWED);
 		bookCopyRepository.save(bookCopy);
 
-		// 7. Save Transaction
+		// Save Transaction
 		return transactionRepository.save(transaction);
 	}
 
@@ -87,50 +86,48 @@ public class BorrowTransactionServiceImpl implements BorrowTransactionService {
 	@Transactional
 	public BorrowTransaction returnBook(String qrCodeStr) {
 
-		// 1. Find the Copy
+		// Find the Copy
 		BookCopy bookCopy = bookCopyRepository.findByQrCodeStr(qrCodeStr)
 				.orElseThrow(() -> new ResourceNotFoundException("Book Copy not found with QR: " + qrCodeStr));
 
-		// 2. Find the Active Transaction for this copy
+		// Find the Active Transaction for this copy
 		// We look for a transaction where this copy was used AND status is ISSUED
 		BorrowTransaction transaction = transactionRepository.findAll().stream()
 				.filter(t -> t.getBookCopy().getId().equals(bookCopy.getId()) && t.getStatus() == BorrowStatus.ISSUED)
 				.findFirst()
 				.orElseThrow(() -> new BusinessLogicException("This book is not currently issued to anyone."));
 
-		// 3. Update Return Details
+		// Update Return Details
 		transaction.setReturnDate(LocalDateTime.now());
 		transaction.setStatus(BorrowStatus.RETURNED);
 		transaction.setReceivedBy("Admin"); // In real app, get logged in user
 
-		// 4. Update Book Copy Status
+		// Update Book Copy Status
 		bookCopy.setStatus(BookStatus.AVAILABLE);
 		bookCopyRepository.save(bookCopy);
 
-		// 5. Save (Your Database Triggers will automatically calculate the Fine Amount
-		// now!)
 		return transactionRepository.save(transaction);
 	}
 
 	@Override
 	public BorrowTransaction renewBook(Long transactionId) {
-	    
-	    // 1. Find the transaction
-	    BorrowTransaction transaction = transactionRepository.findById(transactionId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Transaction not found with ID: " + transactionId));
 
-	    if (transaction.getStatus() != BorrowStatus.ISSUED) {
-	        throw new BusinessLogicException("Cannot renew. Book is already " + transaction.getStatus());
-	    }
+		// Find the transaction
+		BorrowTransaction transaction = transactionRepository.findById(transactionId)
+				.orElseThrow(() -> new ResourceNotFoundException("Transaction not found with ID: " + transactionId));
 
-	    // 2. Define renewal period (e.g., 14 days)
-	    int daysToExtend = 14; 
+		if (transaction.getStatus() != BorrowStatus.ISSUED) {
+			throw new BusinessLogicException("Cannot renew. Book is already " + transaction.getStatus());
+		}
 
-	    // 3. Call Procedure with the DAYS, not the DATE
-	    transactionRepository.callRenewBookProcedure(transactionId, daysToExtend);
+		// Define renewal period (e.g., 14 days)
+		int daysToExtend = 14;
 
-	    // 4. Return updated record
-	    return transactionRepository.findById(transactionId).orElseThrow();
+		// Call Procedure with the DAYS, not the DATE
+		transactionRepository.callRenewBookProcedure(transactionId, daysToExtend);
+
+		// Return updated record
+		return transactionRepository.findById(transactionId).orElseThrow();
 	}
 
 	@Override
@@ -147,13 +144,13 @@ public class BorrowTransactionServiceImpl implements BorrowTransactionService {
 		}
 
 		transaction.setFinePaid(true);
-		// Optionally: You could record the payment date or transaction reference here
+
 		return transactionRepository.save(transaction);
 	}
-	
+
 	@Override
 	public List<BorrowTransaction> getAllTransactions() {
-	    // Simply fetch everything from the table
-	    return transactionRepository.findAll();
+		// Simply fetch everything from the table
+		return transactionRepository.findAll();
 	}
 }

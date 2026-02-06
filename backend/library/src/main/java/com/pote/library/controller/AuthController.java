@@ -18,7 +18,6 @@ public class AuthController {
 		this.authService = authService;
 	}
 
-	// Login Endpoint
 	// POST http://localhost:8080/api/auth/login
 	@PostMapping("/login")
 	public ResponseEntity<SystemUser> login(@Valid @RequestBody LoginRequestDTO request) {

@@ -13,8 +13,6 @@ public class BookRequestDTO {
 	private String language;
 	private String coverImageUrl;
 	private String description;
-
-	// The Frontend sends the ID (e.g., 1), NOT the full Category object
 	private Integer categoryId;
 
 	public String getTitle() {

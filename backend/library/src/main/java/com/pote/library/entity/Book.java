@@ -9,8 +9,8 @@ import lombok.Data;
 public class Book {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // Matches MySQL AUTO_INCREMENT
-	private Long id; // Used Long because DB is BIGINT
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@Column(nullable = false)
 	private String title;
@@ -24,7 +24,6 @@ public class Book {
 	private String edition;
 	private String publisher;
 
-	// Automatic Mapping: publication_year (DB) <-> publicationYear (Java)
 	@Column(name = "publication_year")
 	private Integer publicationYear;
 
@@ -36,8 +35,7 @@ public class Book {
 	@Column(columnDefinition = "TEXT")
 	private String description;
 
-	// --- IMPORTANT: Relationship Mapping ---
-	// This replaces 'int category_id'. It links directly to the Category object.
+	// It links directly to the Category object.
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;

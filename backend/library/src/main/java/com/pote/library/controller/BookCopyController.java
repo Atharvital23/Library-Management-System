@@ -17,7 +17,7 @@ public class BookCopyController {
 		this.bookCopyService = bookCopyService;
 	}
 
-	// 1. Add a Copy
+	// Add a Copy
 	// POST http://localhost:8080/api/copies/add?bookId=1&qrCode=BOOK-001&shelf=A1
 	@PostMapping("/add")
 	public ResponseEntity<BookCopy> addBookCopy(@RequestParam Long bookId, @RequestParam String qrCode,
@@ -27,7 +27,7 @@ public class BookCopyController {
 		return ResponseEntity.ok(newCopy);
 	}
 
-	// 2. View Copies of a Book
+	// View Copies of a Book
 	// GET http://localhost:8080/api/copies/book/1
 	@GetMapping("/book/{bookId}")
 	public ResponseEntity<List<BookCopy>> getCopiesByBookId(@PathVariable Long bookId) {

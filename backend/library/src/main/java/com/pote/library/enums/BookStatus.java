@@ -1,6 +1,9 @@
 package com.pote.library.enums;
 
+/**
+ * In the database enum('AVAILABLE','BORROWED','LOST','MAINTENANCE')
+ */
 public enum BookStatus {
-//	enum('AVAILABLE','BORROWED','LOST','MAINTENANCE')
+
 	AVAILABLE, BORROWED, LOST, MAINTENANCE
 }

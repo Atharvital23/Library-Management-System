@@ -5,6 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface BookCopyRepository extends JpaRepository<BookCopy, Long> {
-	// Custom query: Find specific copy by QR Code (used when scanning)
+
+	/**
+	 * Find specific copy by QR Code (used when scanning)
+	 * 
+	 * @param qrCodeStr
+	 * 
+	 *                  return the BookCopy object
+	 * @return
+	 */
 	Optional<BookCopy> findByQrCodeStr(String qrCodeStr);
 }

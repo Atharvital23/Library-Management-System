@@ -1,6 +1,9 @@
 package com.pote.library.enums;
 
+/**
+ * In the database enum('STUDENT','TEACHER')
+ */
 public enum Role {
-//	enum('STUDENT','TEACHER')
+
 	STUDENT, TEACHER
 }

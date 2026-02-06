@@ -1,6 +1,9 @@
 package com.pote.library.enums;
 
+/**
+ * In the database enum('ACTIVE','INACTIVE')
+ */
 public enum SystemStatus {
-//	enum('ACTIVE','INACTIVE')
+
 	ACTIVE, INACTIVE
 }

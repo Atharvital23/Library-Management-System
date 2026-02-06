@@ -13,23 +13,22 @@ public class AuthServiceImpl implements AuthService {
 
 	private final SystemUserRepository userRepository;
 
-	// Manual Constructor (Dependency Injection)
 	public AuthServiceImpl(SystemUserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
 	@Override
 	public SystemUser login(LoginRequestDTO request) {
-		// 1. Find User by Username
+		// Find User by Username
 		SystemUser user = userRepository.findByUsername(request.getUsername()).orElseThrow(
 				() -> new ResourceNotFoundException("User not found with username: " + request.getUsername()));
 
-		// 2. Validate Password (Plain text check for now)
+		// Validate Password
 		if (!user.getPassword().equals(request.getPassword())) {
 			throw new BusinessLogicException("Invalid username or password.");
 		}
 
-		// 3. Return User (Success)
+		// Return User
 		return user;
 	}
 }

@@ -15,8 +15,6 @@ public class BookController {
 
     private final BookService bookService;
 
-    // --- MANUAL CONSTRUCTOR INJECTION ---
-    // This tells Spring: "When you build this Controller, please give me the BookService."
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }

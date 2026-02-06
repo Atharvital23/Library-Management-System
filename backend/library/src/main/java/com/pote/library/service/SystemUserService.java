@@ -6,11 +6,21 @@ import java.util.List;
 
 public interface SystemUserService {
 
-	// Register a new Admin or Librarian
-	SystemUser registerUser(SystemUserRequestDTO request);
-
-	// Get all system users
+	/**
+	 * Get all system users
+	 * 
+	 * @return
+	 */
 	List<SystemUser> getAllUsers();
-	
+
+	/**
+	 * Register a new Admin or Librarian
+	 * 
+	 * @param request
+	 * @param creatorId
+	 * 
+	 *                  It will return the SystemUser object
+	 * @return
+	 */
 	SystemUser registerUser(SystemUserRequestDTO request, Long creatorId);
 }

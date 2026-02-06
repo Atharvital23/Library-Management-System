@@ -15,7 +15,7 @@ public class Student {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id; // DB uses BIGINT, so Java uses Long
+	private Long id;
 
 	@Column(name = "student_id_card", nullable = false, unique = true)
 	private String studentIdCard;

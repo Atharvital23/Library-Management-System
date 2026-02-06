@@ -14,18 +14,38 @@ import jakarta.transaction.Transactional;
 
 public interface BorrowTransactionRepository extends JpaRepository<BorrowTransaction, Long> {
 
-	// 1. Find all active loans for a specific student (Status = ISSUED)
+	/**
+	 * Find all active loans for a specific student (Status = ISSUED)
+	 * 
+	 * @param studentId
+	 * @param status
+	 * 
+	 *                  It will returns the List of object of BorrowTransaction
+	 *                  class
+	 * @return
+	 */
 	List<BorrowTransaction> findByStudentIdAndStatus(Long studentId, BookStatus status);
 
-	// 2. History: Find all transactions for a specific student
+	/**
+	 * Find all transactions for a specific student
+	 * 
+	 * @param studentId
+	 * 
+	 *                  It will returns the List of object of BorrowTransaction
+	 *                  class
+	 * @return
+	 */
 	List<BorrowTransaction> findByStudentId(Long studentId);
 
-	// OLD (Wrong)
-	// void callRenewBookProcedure(Long transactionId, LocalDateTime newDueDate);
-
-	// NEW (Correct) -> We pass the number of days to add (e.g., 14)
 	@Modifying
 	@Transactional
 	@Query(value = "CALL renew_book(:transactionId, :extraDays)", nativeQuery = true)
+	/**
+	 * Calling Procedure in the sql defines We pass the number of days to add (e.g.,
+	 * 14)
+	 * 
+	 * @param transactionId
+	 * @param extraDays
+	 */
 	void callRenewBookProcedure(@Param("transactionId") Long transactionId, @Param("extraDays") Integer extraDays);
 }

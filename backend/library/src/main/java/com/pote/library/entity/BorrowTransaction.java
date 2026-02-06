@@ -25,14 +25,12 @@ public class BorrowTransaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	// --- IMPORTANT: Relationship Mapping ---
 	// Links to the BookCopy entity. Allows you to see which specific copy was
 	// taken.
 	@ManyToOne
 	@JoinColumn(name = "book_copy_id", nullable = false)
 	private BookCopy bookCopy;
 
-	// --- IMPORTANT: Relationship Mapping ---
 	// Links to the Student entity. Allows you to see who took the book.
 	@ManyToOne
 	@JoinColumn(name = "student_id", nullable = false)
@@ -56,10 +54,10 @@ public class BorrowTransaction {
 	private BorrowStatus status;
 
 	@Column(name = "issued_by", nullable = false)
-	private String issuedBy; // Username of Librarian
+	private String issuedBy; // Username of Admin
 
 	@Column(name = "received_by")
-	private String receivedBy; // Username of Librarian
+	private String receivedBy; // Username of Admin
 
 	// Maps MySQL TINYINT/BOOLEAN to Java boolean
 	@Column(name = "is_fine_paid")

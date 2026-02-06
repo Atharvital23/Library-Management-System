@@ -1,6 +1,9 @@
 package com.pote.library.enums;
 
+/**
+ * In the database enum('LIBRARIAN','ADMIN')
+ */
 public enum SystemRole {
-//	enum('LIBRARIAN','ADMIN')
+
 	LIBRARIAN, ADMIN
 }

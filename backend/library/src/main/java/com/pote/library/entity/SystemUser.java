@@ -14,7 +14,7 @@ public class SystemUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id; // DB is INT, so Java uses Integer
+	private Integer id;
 
 	@Column(nullable = false, unique = true)
 	private String username;
