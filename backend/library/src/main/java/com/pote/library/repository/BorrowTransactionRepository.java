@@ -48,4 +48,15 @@ public interface BorrowTransactionRepository extends JpaRepository<BorrowTransac
 	 * @param extraDays
 	 */
 	void callRenewBookProcedure(@Param("transactionId") Long transactionId, @Param("extraDays") Integer extraDays);
+
+	/**
+	 * Find all transactions by Student ID Card
+	 * 
+	 * @param studentIdCard
+	 * 
+	 *                      It will returns the List of object of BorrowTransaction
+	 *                      class
+	 * @return
+	 */
+	List<BorrowTransaction> findByStudent_StudentIdCard(String studentIdCard);
 }

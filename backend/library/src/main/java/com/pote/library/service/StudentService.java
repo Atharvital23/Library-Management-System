@@ -1,8 +1,10 @@
 package com.pote.library.service;
 
+import java.util.List;
+
+import com.pote.library.dto.StudentProfileDTO;
 import com.pote.library.dto.StudentRequestDTO;
 import com.pote.library.entity.Student;
-import java.util.List;
 
 public interface StudentService {
 
@@ -33,4 +35,14 @@ public interface StudentService {
 	 * @return
 	 */
 	Student registerStudent(StudentRequestDTO request, Long creatorId);
+
+	/**
+	 * Find by College ID Card (e.g. "CS-2024-001")
+	 * 
+	 * @param studentIdCard
+	 * 
+	 *                      It will return the object of an StudentProfileDTO
+	 * @return
+	 */
+	StudentProfileDTO getStudentProfile(String studentIdCard);
 }
